@@ -5,34 +5,10 @@ from random import randrange
 import csv
 import math
 import operator
+from collections import Counter
+
 
 class classifiers:
-    
-class myclass:
-    def __init__(
-        self,
-        n_folds,
-        algorithm,
-        dataset,
-        k_neighbor=1,
-        verbose=True,
-        max_depth=3,
-        min_size=1,
-    ):
-        self.n_folds = n_folds
-        self.k_neighbor = k_neighbor
-        self.dataset = dataset
-        self.verbose = verbose
-        self.max_depth = max_depth
-        self.min_size = min_size
-
-        if algorithm == "NB":
-            self.algorithm = self.naivebayes
-        elif algorithm == "kNN":
-            self.algorithm = self.knn
-        elif algorithm == "ID3":
-            self.algorithm = self.id3
-
     def cv_split(self, dataset, n_folds):
         dataset_split = list()
         dataset_duplicated = list(dataset)
@@ -60,10 +36,12 @@ class myclass:
             trainset.remove(fold)
             trainset = sum(trainset, [])
             testset = list()
+            # print(testset)
             for row in fold:
                 row_copy = list(row)
                 testset.append(row_copy)
-                row_copy[-1] = None
+                # row_copy[-1] = None
+            # print(testset)
             predicted = self.algorithm(
                 trainset,
                 testset,
@@ -74,6 +52,19 @@ class myclass:
             accuracy = self.accuracy(actual_output, predicted)
             scores.append(accuracy)
         return scores
+
+
+class NBclass(classifiers):
+    def __init__(
+        self,
+        n_folds,
+        dataset,
+        verbose=True,
+    ):
+        self.n_folds = n_folds
+        self.dataset = dataset
+        self.verbose = verbose
+        self.algorithm = self.naivebayes
 
     def naivebayes(self, trainset, testset):
         model = self.model_classes(trainset)
@@ -145,6 +136,21 @@ class myclass:
                 probabilities[classValue] *= self.calculate_pdf(x, mean, stdev)
         return probabilities
 
+
+class KNNclass(classifiers):
+    def __init__(
+        self,
+        n_folds,
+        dataset,
+        k_neighbor=1,
+        verbose=True,
+    ):
+        self.n_folds = n_folds
+        self.k_neighbor = k_neighbor
+        self.dataset = dataset
+        self.verbose = verbose
+        self.algorithm = self.knn
+
     def find_response(self, neighbors, classes):  # change
         votes = [0] * len(classes)
 
@@ -199,6 +205,23 @@ class myclass:
 
             prediction.append(classes[index])
         return prediction
+
+
+class ID3class(classifiers):
+    def __init__(
+        self,
+        n_folds,
+        dataset,
+        verbose=True,
+        max_depth=10,
+        min_size=1,
+    ):
+        self.n_folds = n_folds
+        self.dataset = dataset
+        self.verbose = verbose
+        self.max_depth = max_depth
+        self.min_size = min_size
+        self.algorithm = self.id3
 
     # Split a dataset based on an attribute and an attribute value
     def test_split(self, index, value, dataset):
@@ -322,6 +345,70 @@ class myclass:
         return predictions
 
 
+class RFclass(ID3class):
+    num_trees = 0
+    decision_trees = []
+
+    # the bootstrapping datasets for trees
+    # bootstraps_datasets is a list of lists, where each list in bootstraps_datasets is a bootstrapped dataset.
+    bootstraps_datasets = []
+
+    # the true class labels, corresponding to records in the bootstrapping datasets
+    # bootstraps_labels is a list of lists, where the 'i'th list contains the labels corresponding to records in
+    # the 'i'th bootstrapped dataset.
+    bootstraps_labels = []
+
+    def __init__(
+        self,
+        n_folds,
+        dataset,
+        num_trees,
+        verbose=True,
+        max_depth=10,
+        min_size=1,
+    ):
+        self.n_folds = n_folds
+        self.dataset = dataset
+        self.num_trees = num_trees
+        self.verbose = verbose
+        self.max_depth = max_depth
+        self.min_size = min_size
+        self.algorithm = self.RF
+        # self.decision_trees = [id3() for i in range(num_trees)]
+
+    def _bootstrapping(self, training_set):
+        # Reference: https://en.wikipedia.org/wiki/Bootstrapping_(statistics)
+        #
+        # TODO: Create a sample dataset of size n by sampling with replacement
+        #       from the original dataset XX.
+        # Note that you would also need to record the corresponding class labels
+        # for the sampled records for training purposes.
+        # n = len(XX)
+        samples = []  # sampled dataset
+        for i in range(len(training_set)):
+            randomindex = randrange(0, len(training_set))
+            samples.append(training_set[randomindex][:])
+            # labels.append(self.trainset[randomindex][])
+        return samples
+
+    def RF(self, training_set, test_set):
+        # TODO: Train `num_trees` decision trees using the bootstraps datasets
+        # and labels by calling the learn function from your DecisionTree class.
+        predictions = list()
+        for i in range(self.num_trees):
+            data_sample = self._bootstrapping(training_set)
+            predictions.append(self.id3(data_sample, test_set))
+        y = self.voting(predictions)
+        return y
+
+    def voting(self, predictions):
+        y = list()
+        for sample in zip(*predictions):
+            q = Counter(sample)
+            y.append(q.most_common(1)[0][0])
+        return y
+
+
 def main():
     print("[INFO] Setting directories...")
     project_dir = os.getcwd()
@@ -362,7 +449,7 @@ def main():
     # print(canc.head())
 
     dataset = np.array(canc.values).astype(np.float).tolist()
-    nb = myclass(n_folds=5, algorithm="ID3", dataset=dataset, k_neighbor=3)
+    nb = RFclass(n_folds=5, dataset=dataset, num_trees=3)
 
     print("--------- first dataset 'Cancer' --------------")
     print("---------- Gaussian Naive Bayes ---------------")

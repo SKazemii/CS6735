@@ -233,7 +233,7 @@ def main():
 
     target_attribute = config["target_attribute"]
     remaining_attributes = set(data["header"])
-    print(get_uniq_values(data))
+    print((data))
     remaining_attributes.remove(target_attribute)
 
     uniqs = get_uniq_values(data)

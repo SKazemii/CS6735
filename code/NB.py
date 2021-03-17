@@ -6,18 +6,6 @@ import csv
 import math
 
 
-def load_csv_dataset(filename):
-    """Load the CSV file"""
-
-    lines = csv.reader(open(filename, "r"))
-
-    dataset = list(lines)
-    for i in range(len(dataset)):
-        dataset[i] = [float(x) for x in dataset[i]]  # Convert String to Float numbers
-    print(dataset)
-    return dataset
-
-
 def mean(numbers):
     """Returns the mean of numbers"""
     return np.mean(numbers)

@@ -212,10 +212,10 @@ def main():
     # print(dataset)
     print("--------- first dataset 'Cancer' --------------")
     print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = evaluate_algorithm(dataset, ID3, n_folds)
+    accuracy_id3 = evaluate_algorithm(dataset, id3, n_folds)
     print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))
+    print("Accuracy in each fold: %s" % accuracy_id3)
+    print("Average Accuracy: %f" % (sum(accuracy_id3) / len(accuracy_id3)))
 
 
 if __name__ == "__main__":

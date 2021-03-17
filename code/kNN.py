@@ -328,10 +328,10 @@ def main():
 
     print("--------- first dataset 'cars' --------------")
     print("------------------- kNN -----------------------")
-    # accuracy_knn = evaluate_algorithm(dataset, knn, n_folds, k)
-    # print("Naive Bayes Classification")
-    # print("Accuracy in each fold: %s" % accuracy_knn)
-    # print("Average Accuracy: %f" % (sum(accuracy_knn) / len(accuracy_knn)))
+    accuracy_knn = evaluate_algorithm(dataset, knn, n_folds, k)
+    print("Naive Bayes Classification")
+    print("Accuracy in each fold: %s" % accuracy_knn)
+    print("Average Accuracy: %f" % (sum(accuracy_knn) / len(accuracy_knn)))
 
     #############################
     #############################

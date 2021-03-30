@@ -9,7 +9,7 @@ from collections import Counter
 
 
 class classifiers:
-    def cv_split(self, dataset, n_folds):
+    def kfold_split(self, dataset, n_folds):
         dataset_split = list()
         dataset_duplicated = list(dataset)
         fold_size = int(len(dataset) / n_folds)
@@ -28,8 +28,8 @@ class classifiers:
                 correct = correct + 1
         return correct / float(len(actual_output)) * 100.0
 
-    def evaluate_kfold(self):
-        folds = self.cv_split(self.dataset, self.n_folds)
+    def fit(self):
+        folds = self.kfold_split(self.dataset, self.n_folds)
         scores = list()
         for fold in folds:
             trainset = list(folds)
@@ -54,7 +54,7 @@ class classifiers:
         return scores
 
 
-class NBclass(classifiers):
+class NB(classifiers):
     def __init__(
         self,
         n_folds,
@@ -68,18 +68,22 @@ class NBclass(classifiers):
 
     def naivebayes(self, trainset, testset):
         model = self.model_classes(trainset)
-        predictions = self.getPredictions(model, testset)
-        return predictions
-
-    def getPredictions(self, models, testSet):  # change
         predictions = []
-        for i in range(len(testSet)):
-            result = self.predict(models, testSet[i])
+        for i in range(len(testset)):
+            result = self.predict(model, testset[i])
             predictions.append(result)
         return predictions
 
     def predict(self, models, test_row):  # change
-        probabilities = self.calculate_class_probabilities(models, test_row)
+        probabilities = {}
+        for (classValue, classModels) in models.items():
+            probabilities[classValue] = 1
+            for i in range(len(classModels)):
+                (mean, stdev) = classModels[i]
+                x = test_row[i]
+                probabilities[classValue] *= self.calculate_pdf(x, mean, stdev)
+
+        # probabilities = self.calculate_class_probabilities(models, test_row)
         (bestLabel, bestProb) = (None, -1)
         for (classValue, probability) in probabilities.items():
             if bestLabel is None or probability > bestProb:
@@ -87,32 +91,45 @@ class NBclass(classifiers):
                 bestLabel = classValue
         return bestLabel
 
-    def separate_classes(self, dataset):
+    # def separate_classes(self, dataset):
+    #     separatedbyclasses = {}
+    #     for i in range(len(dataset)):
+    #         row = dataset[i]
+    #         if row[-1] not in separatedbyclasses:
+    #             separatedbyclasses[row[-1]] = []
+    #         separatedbyclasses[row[-1]].append(row)
+    #     return separatedbyclasses
+
+    # def model_feature(self, dataset):
+    #     """Find the mean and standard deviation of each feature in dataset"""
+
+    #     models = list()
+    #     for feature in zip(*dataset):
+    #         models.append((np.mean(feature), np.std(feature)))
+
+    #     models = models[:-1]
+    #     return models
+
+    def model_classes(self, dataset):
+        """find the mean and standard deviation of each feature in dataset by their class"""
+        # separatedbyclasses = self.separate_classes(dataset)
         separatedbyclasses = {}
         for i in range(len(dataset)):
             row = dataset[i]
             if row[-1] not in separatedbyclasses:
                 separatedbyclasses[row[-1]] = []
             separatedbyclasses[row[-1]].append(row)
-        return separatedbyclasses
 
-    def model_feature(self, dataset):
-        """Find the mean and standard deviation of each feature in dataset"""
-
-        models = list()
-        for feature in zip(*dataset):
-            models.append((np.mean(feature), np.std(feature)))
-
-        models = models[:-1]
-        return models
-
-    def model_classes(self, dataset):
-        """find the mean and standard deviation of each feature in dataset by their class"""
-        separatedbyclasses = self.separate_classes(dataset)
         classmodels = {}
 
         for (classValue, instances) in separatedbyclasses.items():
-            classmodels[classValue] = self.model_feature(instances)
+            # classmodels[classValue] = self.model_feature(instances)
+            models = list()
+            for feature in zip(*instances):
+                models.append((np.mean(feature), np.std(feature)))
+
+            classmodels[classValue] = models[:-1]
+
         return classmodels
 
     def calculate_pdf(self, x, mean, stdev):  # change
@@ -125,24 +142,24 @@ class NBclass(classifiers):
         exponent = math.exp(-(math.pow(x - mean, 2) / (2 * math.pow(stdev, 2))))
         return 1 / (math.sqrt(2 * math.pi) * stdev) * exponent
 
-    def calculate_class_probabilities(self, models, input):  # change
-        """Calculate the class probability for input sample. Combine probability of each feature"""
-        probabilities = {}
-        for (classValue, classModels) in models.items():
-            probabilities[classValue] = 1
-            for i in range(len(classModels)):
-                (mean, stdev) = classModels[i]
-                x = input[i]
-                probabilities[classValue] *= self.calculate_pdf(x, mean, stdev)
-        return probabilities
+    # def calculate_class_probabilities(self, models, input):  # change
+    #     """Calculate the class probability for input sample. Combine probability of each feature"""
+    #     probabilities = {}
+    #     for (classValue, classModels) in models.items():
+    #         probabilities[classValue] = 1
+    #         for i in range(len(classModels)):
+    #             (mean, stdev) = classModels[i]
+    #             x = input[i]
+    #             probabilities[classValue] *= self.calculate_pdf(x, mean, stdev)
+    #     return probabilities
 
 
-class KNNclass(classifiers):
+class KNN(classifiers):
     def __init__(
         self,
         n_folds,
         dataset,
-        k_neighbor=1,
+        k_neighbor=3,
         verbose=True,
     ):
         self.n_folds = n_folds
@@ -445,15 +462,18 @@ def main():
         )
         .replace("?", np.NaN)
         .dropna()
+        .reset_index()
     )
-    # print(canc.head())
+    canc.drop(columns=["index"], inplace=True)
 
+    # print(canc.describe())
+    # 1 / 0
     dataset = np.array(canc.values).astype(np.float).tolist()
-    nb = RFclass(n_folds=5, dataset=dataset, num_trees=3)
+    nb = NB(n_folds=5, dataset=dataset)
 
     print("--------- first dataset 'Cancer' --------------")
     print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = nb.evaluate_kfold()
+    accuracy_naive = nb.fit()
     print("Naive Bayes Classification")
     print("Accuracy in each fold: %s" % accuracy_naive)
     print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))

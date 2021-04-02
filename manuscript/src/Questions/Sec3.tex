@@ -1,0 +1,122 @@
+\section{Results and discussion}
+
+In this section, we reviewed the result of implemented algorithms on datasets.
+
+
+
+%Report and analysis of your experimental results. Compare and discuss your algorithms (implementations) based on your experimental results..
+
+
+
+\subsection{kNN}
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of Adaboost class.}
+\label{tab:tab_ab}
+\input{manuscript/src/tables/tab_ab}
+\end{table}
+We used this Adaboost algorithm flow for this project:
+\begin{enumerate}
+    \item Initially set uniform example weights.
+    \item For Each weak classifier do:
+    \begin{enumerate}
+        \item Greedy search to find best threshold and feature.
+        \item Find the lowest error as sum of weights of misclassified samples 
+        \item Store the best configuration that has lowest error as a first weak classifier
+        \item Calculate predictions and update weights
+        \item Normalize to weights
+    \end{enumerate}
+
+\end{enumerate}
+Advantages
+The algorithm is simple and easy to implement.
+There’s no need to build a model, tune several parameters, or make additional assumptions.
+The algorithm is versatile. It can be used for classification, regression, and search (as we will see in the next section).
+Disadvantages
+The algorithm gets significantly slower as the number of examples and/or predictors/independent variables increase.
+KNN in practice
+KNN’s main disadvantage of becoming significantly slower as the volume of data increases makes it an impractical choice in environments where predictions need to be made rapidly. Moreover, there are faster algorithms that can produce more accurate classification and regression results.
+However, provided you have sufficient computing resources to speedily handle the data you are using to make predictions, KNN can still be useful in solving problems that have solutions that depend on identifying similar objects. An example of this is using the KNN algorithm in recommender systems, an application of KNN-search.
+
+\subsection{Naive Bayes}
+
+ 
+
+It is a highly extensible algorithm which is very fast.
+
+It can be used for both binaries as well as multiclass classification.
+
+It has mainly three different types of algorithms that are GaussianNB, MultinomialNB, BernoulliNB.
+
+It is a famous algorithm for spam email classification.
+
+It can be easily trained on small datasets and can be used for large volumes of data as well.
+
+ 
+
+ 
+
+Disadvantages:
+
+ 
+
+The main disadvantage of the NB is considering all the variables independent that contributes to the probability. 
+
+ 
+
+ 
+
+Applications of Naive Bayes Algorithms
+ 
+
+Real-time Prediction:  Being a fast learning algorithm can be used to make predictions in real-time as well.
+
+MultiClass Classification:  It can be used for multi-class classification problems also.
+
+Text Classification: As it has shown good results in predicting multi-class classification so it has more success rates compared to all other algorithms. As a result, it is majorly used in sentiment analysis & spam detection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{ID3}
+Analysis of advantages and disadvantages of ID3 algorithm
+Advantages: The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand.
+Disadvantages: In the selection of attributes, it tends to select those with multiple attribute values as split attributes, and these attributes are not necessarily the best split attributes; Cannot handle attributes with continuous values; Without pruning process, the decision tree cannot be optimized, and the generated decision tree may be over-fitting.
+
+
+
+
+\subsection{Random forest}
+
+
+
+
+
+
+
+
+\subsection{AdaBoost}
+AdaBoost is easy to implement. It iteratively corrects the mistakes of the weak classifier and improves accuracy by combining weak learners. You can use many base classifiers with AdaBoost. AdaBoost is not prone to overfitting. This can be found out via experiment results, but there is no concrete reason available.
+
+Cons
+AdaBoost is sensitive to noise data. It is highly affected by outliers because it tries to fit each point perfectly. AdaBoost is slower compared to XGBoost.
+
+Conclusion
+Congratulations, you have made it to the end of this tutorial!
+
+In this tutorial, you have learned the Ensemble Machine Learning Approaches, AdaBoost algorithm, it's working, model building and evaluation using Python Scikit-learn package. Also, discussed its pros and cons.
+
+I look forward to hearing any feedback or questions. You can ask a question by leaving a comment, and I will try my best to answer it.
+
+If you would like to learn more about machine learning in Python, take DataCamp's Extreme Gradient Boosting with XGBoost course.

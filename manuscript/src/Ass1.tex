@@ -4,7 +4,7 @@
 
 \input{acronyms.tex}
 
-\title{Assignment \#1}				% Title
+\title{Programming Project}				% Title
 \author{Saeed Kazemi}				% Author
 \date{\today}						% Date
 
@@ -23,7 +23,7 @@
     \vspace*{0.4 cm}
     \includegraphics[scale = 0.5]{figures/unb.jpg}\\[1.0 cm]	% University Logo
     \textsc{\LARGE \newline\newline University of New Brunswick}\\[1.8 cm]	% University Name
-	\textsc{\Large Time Series Analysis\\(EE 6563)}\\[0.5 cm]				% Course Code
+	\textsc{\Large Machine Learning and Data Mining\\(CS 6735)}\\[0.5 cm]				% Course Code
 	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
 	{ \huge \bfseries \thetitle}\\
 	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
@@ -31,8 +31,8 @@
 	\begin{minipage}{0.5\textwidth}
 		\begin{flushleft} \large
 			\emph{Professor:}\\
-			Erik Scheme\\
-            Electrical and Computer Engineering\\
+			Huajie Zhang\\
+            Computer Science\\
 			\end{flushleft}
 			\end{minipage}~
 			\begin{minipage}{0.5\textwidth}
@@ -57,39 +57,86 @@
 
 
 
-%\tableofcontents
+\tableofcontents
 \pagebreak
+\newpage
+\section*{Introduction}
+This project will focus on comparing and discussing five various algorithms based on your experimental results on the five different datasets. Furthermore, this research will be implemented in Python, and the source codes are available on the GitHub \href{https://github.com/SKazemii/CS6735}{ repository}. 
 
+The rest of this project is organized as follows: Section 1 provides the some information about the dataset along with techniques that are used for pre-processing. Then, in Section 2, the machine learning algorithms will be reviewed. Finally, we discuss the results in Section 3.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %================================================================
-\begin{enumerate}
+\newpage
+\section*{The Questions}
+{\small
+Conduct an experimental study on the following machine learning algorithms: (1) ID3; (2) Adaboost on ID3; (3) Random Forest; (4) Naïve Bayes; (5) K-nearest neighbors (kNN).
 
-\item \textbf{Download the following datasets:}
+
 \begin{enumerate}
-\item \textbf{Minimum Daily Temperatures Dataset}:This dataset describes the minimum daily temperatures over 10 years (1981-1990) in the city Melbourne, Australia. The units are in degrees Celsius and there are 3650 observations. The source of the data is credited as the Australian Bureau of Meteorology  (\href{https://raw.githubusercontent.com/jbrownlee/Datasets/master/daily-min-temperatures.csv}{ Source}).
-\item \textbf{Monthly Sunspot Dataset}:This dataset describes a monthly count of the number of observed sunspots for just over 230 years (1749-1983). The units are a count and there are 2,820 observations. The source of the dataset is credited to Andrews \& Herzberg (1985) (\href{https://raw.githubusercontent.com/jbrownlee/Datasets/master/monthly-sunspots.csv}{ Source}).
+\item Implement the five algorithms using Java or Python.
+\item Evaluate your implementation on the datasets in data.zip (downloadable from course website) using 10 times 5-fold cross-validation, and report the average accuracy and standard deviation. All datasets are for UCI machine learning repository. You can check the detailed descriptions from this 
+\href{http://www.ics.uci.edu/~mlearn/MLRepository.html}{ link.}
+
+\begin{itemize}
+    \item For breast cancer data see this \href{http://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+\%28Diagnostic\%29}{ link.}
+    \item For car data see this \href{http://archive.ics.uci.edu/ml/datasets/Car+Evaluation}{ link.} 
+    \item For ecoli data see this \href{http://archive.ics.uci.edu/ml/datasets/Ecoli}{ link.}
+    \item For letter recognition data see this \href{http://archive.ics.uci.edu/ml/datasets/Letter+Recognition}{ link.}
+    \item For mushroom data see this \href{http://archive.ics.uci.edu/ml/datasets/Mushroom}{ link.} 
+\end{itemize}
+
+For each data set, there is a target variable, the one your model predicts. The following are the target variable for each data set.
+
+\begin{itemize}
+    \item Mushroom: first column (e, p)
+    \item Letter: first column (A, B, ...)
+    \item Ecoli: last column (cp, im, ..)
+    \item Car: last column (acc, uacc, ..)
+    \item Breast-cancer: last column (2, 4)
+\end{itemize}
+
+\item Compare and discuss your algorithms (implementations) based on your experimental results. 
+
+\textbf{Submission:}
+\begin{enumerate}
+\item Hand in a report of your experimental study via Desire2Learning, including:
+\begin{enumerate}
+\item Description of the learning algorithms you implement.
+\item Description of the datasets you use (number of examples, number of attribute, number of classes, type of attributes, etc.).
+\item Technical details of your implementation: pre-processing of data sets (discretization, etc.), parameter setting, etc. 
+\item Design of your programming implementation (data structures, overall program structure).
+\item Report and analysis of your experimental results. 
 \end{enumerate}
+
+\item Submit your code via Desire2Learning.
+\end{enumerate}
+\end{enumerate}
+
+}
+
+  
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Question 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\input{Questions/Ass1-Q1}
+\input{Questions/Sec1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Question 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\input{Questions/Ass1-Q2}
+\input{Questions/Sec2}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Question 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\input{Questions/Ass1-Q3}
+\input{Questions/Sec3}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Question 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\input{Questions/Ass1-Q4}
+%\newpage
+%\input{Questions/Ass1-Q4}
 
 
 
@@ -99,7 +146,7 @@
 
 
 
-\end{enumerate}
+
 
 
 

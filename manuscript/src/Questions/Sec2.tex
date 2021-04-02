@@ -1,0 +1,153 @@
+\section{Implemented algorithms}
+
+In this section, we will review the algorithms as well as implemented techniques. Furthermore, to implementing a k-fold cross validation, we implemented a classifier class that is Parent’s class of other algorithms.
+In the classifier class, we have three methods, kfold\_split(), accuracy(), and fit(). Table \ref{tab:tab_classifier} indicates the methods and attributes of this class. 
+
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of classifier class.}
+\label{tab:tab_classifier}
+\input{manuscript/src/tables/tab_classifier}
+\end{table}
+
+We used this k\_fold algorithm flow:
+\begin{enumerate}
+    \item Find the length of each fold by dividing the dataset length into k\_fold.
+    \item Select an index randomly, and then copy the selected sample to the new set by means of the pop method.
+    \item Check the length of the new set. If it is less than part (1), repeat part (2), otherwise make another set.
+\end{enumerate}
+
+%Description of the learning algorithms you implement.Design of your programming implementation (data structures, overall program structure).
+\subsection{K-nearest neighbors algorithm (KNN)}
+
+For using this algorithm, we need to make an instance of the KNN class. After that with fit method, we train the algorithm. Table \ref{tab:tab_knn} illustrates the methods and attributes of this class.  
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of KNN class.}
+\label{tab:tab_knn}
+\input{manuscript/src/tables/tab_knn}
+\end{table}
+
+We used this kNN algorithm flow for this project:
+\begin{enumerate}
+    \item For each example in the test data, calculate the distances between the current example and all examples in the training set (knn())
+    \item Sort the distances list in ascending order and find the class of the top k\_neighbor (find\_response()).
+    \item Pick and return the first and most repeated label from the previous collection as a label of test example (find\_response()).
+    
+\end{enumerate}
+
+
+
+
+
+
+
+\subsection{Naive Bayes algorithm}
+
+For implementing this algorithm, we wrote the NB class. Table \ref{tab:tab_nb} illustrates the methods and attributes of this class.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of NB class.}
+\label{tab:tab_nb}
+\input{manuscript/src/tables/tab_nb}
+\end{table}
+
+We used this Naive Bayes algorithm flow for this project:
+\begin{enumerate}
+    \item Split training set by class value (model\_classes())
+    \item Find the mean and std of each attribute in each split dataset by their class (model\_classes()).
+    \item Calculate the class probability for each test sample (find\_pdf()). Combine probability of each feature (predict()).
+    \item Compare probability for each class. Return the class label which has max probability (predict()).
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Iterative Dichotomiser 3 algorithm (ID3)}
+We wrote the ID3 class to implement this algorithm.  Table \ref{tab:tab_id3} illustrates the methods and attributes of this class.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of ID3 class.}
+\label{tab:tab_id3}
+\input{manuscript/src/tables/tab_id3}
+\end{table}
+
+We used this ID3 algorithm flow for this project:
+\begin{enumerate}
+    \item Create a node. If all samples in belong to the same class, the algorithm terminates, and the node is marked as a leaf node and marked with the category.
+    \item For each attribute in the data set, calculate the Information Gain. Then split attribute that has the maximum information gain.
+    
+    \item For each value in the split attribute, extend the corresponding branch, and divide samples according to the attribute value.
+    \item Use the same procedure, recursion from the top down until one of the following three conditions is met and the recursion stops. If there are still samples belonging to different categories in the leaf node, the category containing the most samples is selected as the classification of the leaf node.
+    \begin{itemize}
+        \item All samples of A and to be split node belong to the same class 1.
+        \item All samples in the training sample set were classified.
+        \item All attributes are executed once as split attributes.
+    \end{itemize}
+\end{enumerate}
+
+
+\subsection{Random Forest algorithm}
+We used the ID3 class to implement the random forest algorithm. Table \ref{tab:tab_rf} illustrates the methods and attributes of this class.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of ID3 class.}
+\label{tab:tab_rf}
+\input{manuscript/src/tables/tab_rf}
+\end{table}
+We used this ID3 algorithm flow for this project:
+\begin{enumerate}
+    \item For Each tree do:
+    \begin{enumerate}
+        \item Create a bagging dataset.
+        \item Train a ID3 decision tree based on the new dataset.
+        \item Test the tree with the test set.
+    \end{enumerate}
+    \item Vote between results of trees about the final result
+    
+\end{enumerate}
+
+
+
+
+
+
+\subsection{Adaboost algorithm}
+We used the binary classification (stump) to implement the Adaboost algorithm. Table \ref{tab:tab_ab} illustrates the methods and attributes of this class.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of Adaboost class.}
+\label{tab:tab_ab}
+\input{manuscript/src/tables/tab_ab}
+\end{table}
+We used this Adaboost algorithm flow for this project:
+\begin{enumerate}
+    \item Initially set uniform example weights.
+    \item For Each weak classifier do:
+    \begin{enumerate}
+        \item Greedy search to find best threshold and feature.
+        \item Find the lowest error as sum of weights of misclassified samples 
+        \item Store the best configuration that has lowest error as a first weak classifier
+        \item Calculate predictions and update weights
+        \item Normalize to weights
+    \end{enumerate}
+
+\end{enumerate}
+

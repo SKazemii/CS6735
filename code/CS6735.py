@@ -14,7 +14,7 @@ class classifiers:
         dataset_split = list()
         dataset_duplicated = list(dataset)
         fold_size = int(len(dataset) / n_folds)
-        for i in range(n_folds):
+        for _ in range(n_folds):
             fold = list()
             while len(fold) < fold_size:
                 index = randrange(len(dataset_duplicated))
@@ -130,7 +130,7 @@ class KNN(classifiers):
         n_folds,
         dataset,
         k_neighbor=3,
-        verbose=True,
+        verbose=False,
     ):
         self.n_folds = n_folds
         self.k_neighbor = k_neighbor
@@ -200,8 +200,7 @@ class ID3(classifiers):
         n_folds,
         dataset,
         names,
-        flag=2,
-        verbose=True,
+        verbose=False,
     ):
         self.n_folds = n_folds
         self.dataset = dataset
@@ -332,7 +331,7 @@ class RF(ID3):
 
     def RF(self, training_set, test_set):
         predictions = list()
-        for i in range(self.num_trees):
+        for _ in range(self.num_trees):
             data_sample = self.bootstrapping(training_set)
             predictions.append(self.id3(data_sample, test_set))
         y = self.voting(predictions)
@@ -428,7 +427,7 @@ class AB(classifiers):
             # calculate predictions and update weights
             predictions = clf.predict(X)
 
-            w *= np.exp(-clf.alpha * y * predictions)
+            w *= np.exp(-1 * clf.alpha * y * predictions)
             # Normalize to one
             w /= np.sum(w)
 
@@ -442,7 +441,7 @@ class AB(classifiers):
         return y_pred
 
 
-def main():
+class files:
     print("[INFO] Setting directories...")
     project_dir = os.getcwd()
     fig_dir = os.path.join(
@@ -457,343 +456,3 @@ def main():
     ecol_dataset_file = os.path.join(data_dir, "ecoli.data")
     lett_dataset_file = os.path.join(data_dir, "letter-recognition.data")
     mush_dataset_file = os.path.join(data_dir, "mushroom.data")
-
-    n_folds = 5
-    #############################
-    #############################
-    ############ canc  ##########
-    #############################
-    #############################
-    print("[INFO] loading and preparing the first dataset, (canc)...")
-    names = ["feature_" + str(i) for i in range(9)] + ["target"]
-
-    canc = (
-        pd.read_csv(
-            canc_dataset_file,
-            header=0,
-            names=names,
-            index_col=0,
-            parse_dates=True,
-            squeeze=True,
-        )
-        .replace("?", np.NaN)
-        .dropna()
-        .reset_index()
-    )
-    canc.drop(columns=["index"], inplace=True)
-
-    canc.replace(
-        {
-            "target": {
-                4.0: 1,
-                2.0: -1,
-            },
-        },
-        inplace=True,
-    )
-
-    dataset = np.array(canc.values).astype(np.float).tolist()
-    nb = AB(n_folds=5, dataset=dataset, n_clf=5)
-    # nb = ID3(n_folds=5, dataset=dataset, names=names, flag=2)
-
-    print("--------- first dataset 'Cancer' --------------")
-    print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = nb.fit()
-    print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print(
-        "Average Accuracy: {:0.2f}%".format((sum(accuracy_naive) / len(accuracy_naive)))
-    )
-    1 / 0
-    #############################
-    #############################
-    ############ cars  ##########
-    #############################
-    #############################
-    print("[INFO] loading and preparing the Second dataset, (cars)...")
-    names = ["feature_" + str(i) for i in range(6)] + ["target"]
-
-    cars = (
-        pd.read_csv(
-            cars_dataset_file,
-            header=0,
-            names=names,
-            index_col=0,
-            parse_dates=True,
-            squeeze=True,
-        ).dropna()
-    ).reset_index()
-
-    cars.replace(
-        {
-            "feature_0": {"vhigh": 4, "med": 2, "high": 3, "low": 1},
-            "feature_1": {"vhigh": 4, "med": 2, "high": 3, "low": 1},
-            "feature_2": {"2": 1, "3": 2, "4": 3, "5more": 4},
-            "feature_3": {"2": 1, "4": 2, "more": 3},
-            "feature_4": {"small": 1, "med": 2, "big": 3},
-            "feature_5": {"med": 2, "high": 3, "low": 1},
-            "target": {"good": 1, "vgood": 2, "acc": 3, "unacc": 4},
-        },
-        inplace=True,
-    )
-
-    dataset = np.array(cars.values).astype(np.float).tolist()
-
-    print("---------- Second dataset 'car' ---------------")
-    print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = evaluate_algorithm(dataset, naive_bayes, n_folds)
-    print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))
-
-    #############################
-    #############################
-    ############ ecol  ##########
-    #############################
-    #############################
-    print("[INFO] loading and preparing the third dataset, (ecol)...")
-    names = ["feature_" + str(i) for i in range(8)] + ["target"]
-
-    ecol = (
-        pd.read_csv(
-            ecol_dataset_file,
-            header=0,
-            names=names,
-            index_col=0,
-            parse_dates=True,
-            squeeze=True,
-        ).dropna()
-    ).reset_index()
-
-    # print(set(ecol["target"]))
-    ecol.replace(
-        {
-            "target": {
-                "im": 1,
-                "om": 2,
-                "imL": 3,
-                "pp": 4,
-                "imU": 5,
-                "cp": 6,
-                "imS": 7,
-                "omL": 8,
-            },
-        },
-        inplace=True,
-    )
-    ecol.drop(columns=["feature_0"], inplace=True)
-    dataset = np.array(ecol.values).astype(np.float).tolist()
-
-    print("---------- third dataset 'ecol' ---------------")
-    print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = evaluate_algorithm(dataset, naive_bayes, n_folds)
-    print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))
-
-    #############################
-    ############ lett  ##########
-    #############################
-    #############################
-    print("[INFO] loading and preparing the fourth dataset, (lett)...")
-    names = ["target"] + ["feature_" + str(i) for i in range(16)]
-    lett = (
-        pd.read_csv(
-            lett_dataset_file,
-            header=0,
-            names=names,
-            index_col=0,
-            parse_dates=True,
-            squeeze=True,
-        ).dropna()
-    ).reset_index()
-    # print(set(lett["target"]))
-    lett.replace(
-        {
-            "target": {
-                "Y": 1,
-                "H": 2,
-                "C": 3,
-                "F": 4,
-                "S": 5,
-                "I": 6,
-                "J": 7,
-                "M": 8,
-                "A": 9,
-                "L": 10,
-                "P": 11,
-                "N": 12,
-                "Q": 13,
-                "X": 14,
-                "V": 15,
-                "T": 16,
-                "D": 17,
-                "U": 18,
-                "K": 19,
-                "Z": 20,
-                "R": 21,
-                "W": 22,
-                "O": 23,
-                "B": 24,
-                "G": 25,
-                "E": 26,
-            }
-        },
-        inplace=True,
-    )
-    lett.drop(columns=["feature_0"], inplace=True)
-    lett["target_1"] = lett["target"]
-    lett.drop(columns=["target"], inplace=True)
-
-    dataset = np.array(lett.values).astype(np.float).tolist()
-
-    print("---------- fourth dataset 'lett' --------------")
-    print("---------- Gaussian Naive Bayes ---------------")
-    # accuracy_naive = evaluate_algorithm(dataset, naive_bayes, n_folds)
-    print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))
-
-    #############################
-    ############ mush  ##########
-    #############################
-    #############################
-    print("[INFO] loading and preparing the fifth dataset, (mush)...")
-    names = ["target"] + ["feature_" + str(i) for i in range(22)]
-    mush = (
-        pd.read_csv(
-            mush_dataset_file,
-            header=0,
-            names=names,
-            index_col=0,
-            parse_dates=True,
-            squeeze=True,
-        )
-        .replace("?", np.NaN)
-        .dropna()
-    ).reset_index()
-
-    # print(set(mush["feature_19"]))
-
-    mush.replace(
-        {
-            "target": {"e": 1, "p": 2},
-            "feature_0": {"x": 1, "c": 2, "f": 3, "k": 4, "s": 5, "b": 6},
-            "feature_1": {"s": 1, "g": 2, "y": 3, "f": 4},
-            "feature_2": {
-                "r": 1,
-                "u": 2,
-                "y": 3,
-                "p": 4,
-                "w": 5,
-                "c": 6,
-                "e": 7,
-                "n": 8,
-                "g": 9,
-                "b": 10,
-            },
-            "feature_3": {"f": 1, "t": 2},
-            "feature_4": {
-                "l": 1,
-                "f": 2,
-                "y": 3,
-                "m": 4,
-                "c": 5,
-                "p": 6,
-                "a": 7,
-                "s": 8,
-                "n": 9,
-            },
-            "feature_5": {"f": 1, "a": 2},
-            "feature_6": {"w": 1, "c": 2},
-            "feature_7": {"b": 1, "n": 2},
-            "feature_8": {
-                "w": 1,
-                "y": 2,
-                "e": 3,
-                "n": 4,
-                "k": 5,
-                "g": 6,
-                "u": 7,
-                "b": 8,
-                "r": 9,
-                "p": 10,
-                "h": 11,
-                "o": 12,
-            },
-            "feature_9": {"e": 1, "t": 2},
-            "feature_10": {"b": 1, "c": 2, "e": 3, "r": 4},  ##
-            "feature_11": {"f": 1, "y": 2, "s": 3, "k": 4},
-            "feature_12": {"f": 1, "y": 2, "s": 3, "k": 4},
-            "feature_13": {
-                "w": 1,
-                "y": 2,
-                "p": 3,
-                "o": 4,
-                "n": 5,
-                "e": 6,
-                "c": 7,
-                "g": 8,
-                "b": 9,
-            },
-            "feature_14": {
-                "w": 1,
-                "y": 2,
-                "p": 3,
-                "o": 4,
-                "n": 5,
-                "e": 6,
-                "c": 7,
-                "g": 8,
-                "b": 9,
-            },
-            "feature_15": {"p": 1},
-            "feature_16": {"o": 1, "w": 2, "y": 3, "n": 4},
-            "feature_17": {"o": 1, "n": 2, "t": 3},
-            "feature_18": {"e": 1, "f": 2, "l": 3, "p": 4, "n": 5},
-            "feature_19": {
-                "y": 1,
-                "b": 2,
-                "n": 3,
-                "k": 4,
-                "w": 5,
-                "r": 6,
-                "o": 7,
-                "h": 8,
-                "u": 9,
-            },
-            "feature_20": {
-                "y": 1,
-                "n": 2,
-                "v": 3,
-                "c": 4,
-                "a": 5,
-                "s": 6,
-            },
-            "feature_21": {
-                "l": 1,
-                "w": 2,
-                "d": 3,
-                "p": 4,
-                "g": 5,
-                "m": 6,
-                "u": 7,
-            },
-        },
-        inplace=True,
-    )
-    mush["target_1"] = mush["target"]
-    mush.drop(columns=["target"], inplace=True)
-
-    dataset = np.array(mush.values).astype(np.float).tolist()
-
-    print("---------- fifth dataset 'mush' --------------")
-    print("---------- Gaussian Naive Bayes ---------------")
-    accuracy_naive = evaluate_algorithm(dataset, naive_bayes, n_folds)
-    print("Naive Bayes Classification")
-    print("Accuracy in each fold: %s" % accuracy_naive)
-    print("Average Accuracy: %f" % (sum(accuracy_naive) / len(accuracy_naive)))
-
-
-if __name__ == "__main__":
-    main()

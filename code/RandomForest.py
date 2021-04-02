@@ -2,7 +2,7 @@ from CS6735 import *
 
 print("[INFO] loading and preparing the first dataset, (canc)...")
 names = ["feature_" + str(i) for i in range(9)] + ["target"]
-a = "Accuracy ID3 on cancer dataset"
+a = "Accuracy Random Forest on cancer dataset"
 canc = (
     pd.read_csv(
         files.canc_dataset_file,
@@ -22,8 +22,8 @@ canc.drop(columns=["index"], inplace=True)
 dataset = np.array(canc.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
-    accuracy = id3.fit()
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
@@ -174,14 +174,14 @@ mush.drop(columns=["target"], inplace=True)
 dataset = np.array(mush.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
-    accuracy = id3.fit()
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy ID3 on mushroom dataset"
+a = "Accuracy Random Forest on mushroom dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -231,14 +231,14 @@ cars.replace(
 dataset = np.array(cars.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
-    accuracy = id3.fit()
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy ID3 on cars dataset"
+a = "Accuracy Random Forest on cars dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -294,14 +294,14 @@ dataset = np.array(ecol.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
-    accuracy = id3.fit()
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy ID3 on ecol dataset"
+a = "Accuracy Random Forest on ecol dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -373,14 +373,14 @@ dataset = np.array(lett.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
-    accuracy = id3.fit()
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy ID3 on letter dataset"
+a = "Accuracy Random Forest on letter dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (

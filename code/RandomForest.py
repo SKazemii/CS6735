@@ -294,7 +294,7 @@ dataset = np.array(ecol.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=names)
+    rf = RF(n_folds=5, dataset=dataset, names=ecol.columns.to_list())
     accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
@@ -373,7 +373,7 @@ dataset = np.array(lett.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=names)
+    rf = RF(n_folds=5, dataset=dataset, names=lett.columns.to_list())
     accuracy = rf.fit()
     acc.append(sum(accuracy) / len(accuracy))
 

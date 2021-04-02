@@ -289,12 +289,14 @@ ecol.replace(
     inplace=True,
 )
 ecol.drop(columns=["feature_0"], inplace=True)
+
+
 dataset = np.array(ecol.values).astype(np.float).tolist()
 
 
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    id3 = ID3(n_folds=5, dataset=dataset, names=ecol.columns.to_list())
     accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
@@ -373,7 +375,7 @@ dataset = np.array(lett.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    id3 = ID3(n_folds=5, dataset=dataset, names=lett.columns.to_list())
     accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 

@@ -205,7 +205,6 @@ class ID3(classifiers):
         self.n_folds = n_folds
         self.dataset = dataset
         self.verbose = verbose
-        self.flag = flag
         self.names = names
         self.algorithm = self.id3
 

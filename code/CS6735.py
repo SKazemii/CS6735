@@ -10,6 +10,16 @@ import pprint as pp
 
 
 class classifiers:
+    def __init__(
+        self,
+        n_folds,
+        dataset,
+        algorithm,
+    ):
+        self.n_folds = n_folds
+        self.dataset = dataset
+        self.algorithm = algorithm
+
     def kfold_split(self, dataset, n_folds):
         dataset_split = list()
         dataset_duplicated = list(dataset)
@@ -37,11 +47,9 @@ class classifiers:
             trainset.remove(fold)
             trainset = sum(trainset, [])
             testset = list()
-            # print(testset)
             for row in fold:
                 row_copy = list(row)
                 testset.append(row_copy)
-                # row_copy[-1] = None
             # print(testset)
             predicted = self.algorithm(
                 trainset,
@@ -66,6 +74,7 @@ class NB(classifiers):
         self.dataset = dataset
         self.verbose = verbose
         self.algorithm = self.naivebayes
+        classifiers(n_folds, dataset, self.algorithm)
 
     def naivebayes(self, trainset, testset):
         model = self.model_classes(trainset)
@@ -92,8 +101,6 @@ class NB(classifiers):
         return bestLabel
 
     def model_classes(self, dataset):
-        """find the mean and standard deviation of each feature in dataset by their class"""
-        # separatedbyclasses = self.separate_classes(dataset)
         separatedbyclasses = {}
         for i in range(len(dataset)):
             row = dataset[i]
@@ -104,7 +111,6 @@ class NB(classifiers):
         classmodels = {}
 
         for (classValue, instances) in separatedbyclasses.items():
-            # classmodels[classValue] = self.model_feature(instances)
             models = list()
             for feature in zip(*instances):
                 models.append((np.mean(feature), np.std(feature)))
@@ -113,8 +119,7 @@ class NB(classifiers):
 
         return classmodels
 
-    def find_pdf(self, x, mean, stdev):  # change
-        """Calculate probability using gaussian density function"""
+    def find_pdf(self, x, mean, stdev):
         if stdev == 0.0:
             if x == mean:
                 return 1.0
@@ -137,29 +142,26 @@ class KNN(classifiers):
         self.dataset = dataset
         self.verbose = verbose
         self.algorithm = self.knn
+        classifiers(n_folds, dataset, self.algorithm)
 
-    def find_response(self, neighbors, classes):  # change
+    def find_response(self, neighbors, classes):
         votes = [0] * len(classes)
 
         for instance in neighbors:
 
-            # print(instance)
-
             for ctr, c in enumerate(classes):
-                # print(c)
                 if instance[-2] == c:
                     votes[ctr] += 1
 
         return max(enumerate(votes), key=operator.itemgetter(1))
 
-    def knn(self, training_set, test_set):  # change
+    def knn(self, training_set, test_set):
         distances = []
         features_number = len(training_set[0]) - 1
 
-        # generate response classes from training data
         classes = list(set([row[-1] for row in training_set]))
         prediction = list()
-        for crtl, test_instance in enumerate(test_set):
+        for _, test_instance in enumerate(test_set):
 
             for row in training_set:
                 temp = math.dist(row[:features_number], test_instance[:features_number])
@@ -170,10 +172,8 @@ class KNN(classifiers):
 
             neighbors = distances[0 : self.k_neighbor]
 
-            # get the class with maximum votes
             index, value = self.find_response(neighbors, classes)
 
-            # Display prediction
             if self.verbose:
                 print(
                     "The predicted class for sample "
@@ -207,6 +207,7 @@ class ID3(classifiers):
         self.verbose = verbose
         self.names = names
         self.algorithm = self.id3
+        classifiers(n_folds, dataset, self.algorithm)
 
     def predict(self, query, tree, default=1):
         for key in list(query.keys()):
@@ -320,10 +321,11 @@ class RF(ID3):
         self.verbose = verbose
         self.names = names
         self.algorithm = self.RF
+        classifiers(n_folds, dataset, self.algorithm)
 
     def bootstrapping(self, training_set):
-        samples = []  # sampled dataset
-        for i in range(len(training_set)):
+        samples = []
+        for _ in range(len(training_set)):
             randomindex = randrange(0, len(training_set))
             samples.append(training_set[randomindex][:])
         return samples
@@ -369,6 +371,7 @@ class AB(classifiers):
         self.n_folds = n_folds
         self.dataset = dataset
         self.algorithm = self.AB
+        classifiers(n_folds, dataset, self.algorithm)
 
     def AB(self, trainset, testset):
         X = list()
@@ -382,29 +385,22 @@ class AB(classifiers):
 
     def ABoost(self, X, y):
         n_samples, n_features = X.shape
-        # n_features -= n_features
-        # y = X[:,-1]
-        # Initialize weights to 1/N
         w = np.full(n_samples, (1 / n_samples))
 
         self.clfs = []
-        # Iterate through classifiers
         for _ in range(self.n_clf):
             clf = stump()
 
             min_error = float("inf")
-            # greedy search to find best threshold and feature
             for feature_i in range(n_features):
                 X_column = X[:, feature_i]
                 thresholds = np.unique(X_column)
 
                 for threshold in thresholds:
-                    # predict with polarity 1
                     p = 1
                     predictions = np.ones(n_samples)
                     predictions[X_column < threshold] = -1
 
-                    # Error = sum of weights of misclassified samples
                     misclassified = w[y != predictions]
                     error = sum(misclassified)
 
@@ -412,25 +408,20 @@ class AB(classifiers):
                         error = 1 - error
                         p = -1
 
-                    # store the best configuration
                     if error < min_error:
                         clf.polarity = p
                         clf.threshold = threshold
                         clf.feature_idx = feature_i
                         min_error = error
 
-            # calculate alpha
             EPS = 1e-10
             clf.alpha = 0.5 * np.log((1.0 - min_error + EPS) / (min_error + EPS))
 
-            # calculate predictions and update weights
             predictions = clf.predict(X)
 
             w *= np.exp(-1 * clf.alpha * y * predictions)
-            # Normalize to one
             w /= np.sum(w)
 
-            # Save classifier
             self.clfs.append(clf)
 
     def predict(self, X):

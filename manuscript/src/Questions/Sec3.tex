@@ -11,7 +11,7 @@ In this section, we reviewed the result of implemented algorithms on datasets.
 
 
 \subsection{K-nearest neighbors algorithm (KNN)}
-This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor) and we consider it as 3 for all dataset. The algorithm got significantly slower for letter and mushroom dataset because the volume of data increased.
+This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. 
 
 \begin{table}[H]
 \centering
@@ -62,7 +62,7 @@ This algorithm is very simple and easy to implement. It has only one hyper-param
 
  
 
-It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on the cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be either features are dependent or their distribution are not Gaussian.      
+It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyper-parameter.      
 
 
 
@@ -112,8 +112,8 @@ It is a fast algorithm. In this algorithm, we must assume that the features are 
 
 
 \subsection{Iterative Dichotomiser 3 algorithm (ID3)}
-The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand.
-Disadvantages: In the selection of attributes, it tends to select those with multiple attribute values as split attributes, and these attributes are not necessarily the best split attributes; Cannot handle attributes with continuous values; Without pruning process, the decision tree cannot be optimized, and the generated decision tree may be over-fitting.
+The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand. Also it could not support continuous values. Therefore, all datasets were discretized before using this algorithm. 
+
 
 \begin{table}[H]
 \centering
@@ -174,8 +174,7 @@ Disadvantages: In the selection of attributes, it tends to select those with mul
 
 
 \subsection{Random Forest algorithm}
-
-For this project, number of trees was set 5.
+Random Forest is less impacted by noise, because we train several decision trees. For this project, the number of trees was set to 5. Due to the fact that this algorithm is derived from ID3, we need to discretize data. 
 
 \begin{table}[H]
 \centering
@@ -221,7 +220,7 @@ For this project, number of trees was set 5.
 
 
 \subsection{Adaboost algorithm}
-Adaboost is easy to implement. Also it could not overtrain scince each node divided into a couple branches. It can be implemented with other classifications, I implemented with a binary stump classifier. As a result, I could classify only on cancer and mushroom dataset because these datasets are only two classes. For this project, number of weak classifiers considered 5.
+Adaboost is easy to implement. Also, it could not overtrain since each node is divided into two branches. It can be implemented with other classifications. I have implemented it with a binary stump classifier. As a result, I could classify only cancer and mushroom datasets because these are only two classes. For this project, the number of weak classifiers considered 5.
 
 
 

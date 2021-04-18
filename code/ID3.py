@@ -2,7 +2,7 @@ from CS6735 import *
 
 print("[INFO] loading and preparing the first dataset, (canc)...")
 names = ["feature_" + str(i) for i in range(9)] + ["target"]
-a = "Accuracy Random Forest on cancer dataset"
+a = "Accuracy ID3 on cancer dataset"
 canc = (
     pd.read_csv(
         files.canc_dataset_file,
@@ -24,8 +24,8 @@ for i in range(9):
 dataset = np.array(canc.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=names)
-    accuracy = rf.fit()
+    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
@@ -42,7 +42,6 @@ df = pd.DataFrame(np.around(acc1, 2), columns=[a], index=index)
 print("[INFO] Saving Results on file...")
 with open(os.path.join(files.tbl_dir, a + ".tex"), "w") as tf:
     tf.write(df.to_latex(index=True))
-
 #############################
 #############################
 ###########  mush  ##########
@@ -177,14 +176,14 @@ mush.drop(columns=["target"], inplace=True)
 dataset = np.array(mush.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=names)
-    accuracy = rf.fit()
+    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy Random Forest on mushroom dataset"
+a = "Accuracy ID3 on mushroom dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -234,14 +233,14 @@ cars.replace(
 dataset = np.array(cars.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=names)
-    accuracy = rf.fit()
+    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy Random Forest on cars dataset"
+a = "Accuracy ID3 on cars dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -292,24 +291,25 @@ ecol.replace(
     inplace=True,
 )
 ecol.drop(columns=["feature_0"], inplace=True)
-
+# print(ecol.head(10))
 for i in range(7):
     ecol[names[i + 1]] = discr(ecol[names[i + 1]].values.astype(np.float), 5)
 
 
+# 1 / 0
 dataset = np.array(ecol.values).astype(np.float).tolist()
 
 
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=ecol.columns.to_list())
-    accuracy = rf.fit()
+    id3 = ID3(n_folds=5, dataset=dataset, names=ecol.columns.to_list())
+    accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy Random Forest on ecol dataset"
+a = "Accuracy ID3 on ecol dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (
@@ -377,22 +377,22 @@ lett.drop(columns=["feature_0"], inplace=True)
 lett["target_1"] = lett["target"]
 lett.drop(columns=["target"], inplace=True)
 
-
 for i in range(15):
     lett[names[i + 2]] = discr(lett[names[i + 2]].values.astype(np.float), 5)
+
 
 dataset = np.array(lett.values).astype(np.float).tolist()
 
 acc = list()
 for _ in range(10):
-    rf = RF(n_folds=5, dataset=dataset, names=lett.columns.to_list())
-    accuracy = rf.fit()
+    id3 = ID3(n_folds=5, dataset=dataset, names=lett.columns.to_list())
+    accuracy = id3.fit()
     acc.append(sum(accuracy) / len(accuracy))
 
 acc1 = copy.deepcopy(acc)
 acc1.append(np.average(acc))
 acc1.append(np.std(acc))
-a = "Accuracy Random Forest on letter dataset"
+a = "Accuracy ID3 on letter dataset"
 
 print(a + " (Average): {:0.2f}%".format((sum(acc) / len(acc))))
 index = (

@@ -126,7 +126,7 @@ I have implemented the Naive Bayes algorithm as follows:
 
 
 \subsection{Iterative Dichotomiser 3 algorithm (ID3)}
-We wrote the ID3 class to implement this algorithm.  Table \ref{tab:tab_id3} illustrates the methods and attributes of this class. This algorithm calls yourself like a recursive function. Moreover, the dataset must be a categorical data.
+We wrote the ID3 class to implement this algorithm.  Table \ref{tab:tab_id3} illustrates the methods and attributes of this class. This algorithm calls yourself like a recursive function. Moreover, the dataset must be a categorical data. Therefore, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
 
 \begin{table}[H]
 \centering
@@ -178,7 +178,7 @@ I have implemented the ID3 algorithm as follows:
 
 
 \subsection{Random Forests algorithm}
-We used the ID3 class to implement the random forests algorithm. Table \ref{tab:tab_rf} illustrates the methods and attributes of this class. 
+We used the ID3 class to implement the random forests algorithm. Table \ref{tab:tab_rf} illustrates the methods and attributes of this class.  To converting continuous values to discreated version, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
 
 \begin{table}[H]
 \centering
@@ -218,7 +218,7 @@ for _ in range(10):
 
 
 \subsection{Adaboost algorithm}
-We used the binary classification (stump) to implement the Adaboost algorithm. Table \ref{tab:tab_ab} illustrates the methods and attributes of this class. Moreover, the implemented algorithm could do binary classification.
+We used the binary classification (stump) to implement the Adaboost algorithm. Table \ref{tab:tab_ab} illustrates the methods and attributes of this class. Moreover, the implemented algorithm could do binary classification. Also, the dataset must be a categorical data. So, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
 
 \begin{table}[H]
 \centering

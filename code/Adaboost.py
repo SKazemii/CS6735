@@ -28,6 +28,9 @@ canc.replace(
     inplace=True,
 )
 
+for i in range(9):
+    canc[names[i]] = discr(canc[names[i]].values.astype(np.float), 5)
+
 dataset = np.array(canc.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):
@@ -72,7 +75,7 @@ mush = (
 ).reset_index()
 
 # print(set(mush["feature_19"]))
-print(mush.head())
+# print(mush.head())
 
 mush.replace(
     {
@@ -183,7 +186,7 @@ mush.replace(
 )
 mush["target_1"] = mush["target"]
 mush.drop(columns=["target"], inplace=True)
-print(mush.head())
+# print(mush.head())
 dataset = np.array(mush.values).astype(np.float).tolist()
 acc = list()
 for _ in range(10):

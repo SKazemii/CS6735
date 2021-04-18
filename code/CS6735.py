@@ -446,3 +446,9 @@ class files:
     ecol_dataset_file = os.path.join(data_dir, "ecoli.data")
     lett_dataset_file = os.path.join(data_dir, "letter-recognition.data")
     mush_dataset_file = os.path.join(data_dir, "mushroom.data")
+
+
+def discr(x, k):
+    w = (np.max(x) - np.min(x)) / k
+    bins = [np.min(x) + (i) * w for i in range(k)]
+    return np.digitize(x, bins=bins, right=False)

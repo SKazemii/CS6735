@@ -11,7 +11,7 @@ In this section, we reviewed the result of implemented algorithms on datasets.
 
 
 \subsection{K-nearest neighbors algorithm (KNN)}
-This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. 
+This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. Furthermore, this algorithm take the numerical values. Since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by replace method. 
 
 \begin{table}[H]
 \centering
@@ -62,7 +62,7 @@ This algorithm is very simple and easy to implement. It has only one hyper-param
 
  
 
-It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyper-parameter.      
+It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyperparameters. Furthermore, this algorithm take the numerical values. Since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by replace method.       
 
 
 

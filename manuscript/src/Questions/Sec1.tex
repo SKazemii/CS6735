@@ -2,12 +2,48 @@
 \section{ Datasets and pre-processing}
 \vspace{2cm}
 In this section, we will review the datasets as well as the pre-processing techniques. Dataset can be downloaded from the Desire2Learning website. 
-Before describing the dataset, let look at the algorithms and what kind of data is proper.
+Before describing the dataset, let look at the discretization algorithm.
 
 
 
 %Description of the datasets you use (number of examples, number of attribute, number of classes, type of attributes, etc.).
 %Technical details of your implementation: pre-processing of data sets (discretization, etc.), parameter setting, etc.
+\subsection{Discretization algorithm}
+\label{ses:Discretization}
+Since some of algorithms accept only discreated values, I have used the equal width binning algorithm to discretize the continuous data to categorical version. This method to partition the range of features into k equal-width distances. The interval width (w) is calculated by the below equation.
+
+$$
+w = \frac{[ max(feature)-min(feature)] }{k}
+$$
+
+Then, the $i^{th}$ interval range can be found by using this equation.
+
+$$
+[min(feature) + (i-1)w,~~ min(feature) + iw] \mbox{~~where~~}  i = 1, 2, 3, \dots, k
+$$
+
+Now, we can scan each features values and if it is in the $i^{th}$ interval range, we replace it with $i$ value. As a result, the new feature set has only $i$ different value.
+
+Breast cancer, Ecoli and letter dataset have the continuous attributes, and I have discretized them for using ID3, Random Forests, and Adaboost classifier. 
+
+\begin{table}[H]
+\centering
+\caption{The equal width binning function for discretizing the continious data to categorical version.}
+\begin{lstlisting}
+def discr(x, k=5):
+    w = (np.max(x) - np.min(x)) / k
+    bins = [np.min(x) + (i) * w for i in range(k)]
+    return np.digitize(x, bins=bins, right=False)
+\end{lstlisting}
+\end{table}
+
+
+
+
+
+\subsection{Categorical to numerical values}
+Car and Mushroom dataset are two data set that have categorical values. To converting these two datasets to a contentious data, I have replaced the categorical values with a numerical values. 
+
 
 
 
@@ -76,39 +112,4 @@ The size of the dataset is 20000 $\times$ 16. The first column also shows the cl
 
 This data set includes descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family. Each species is identified as definitely edible (e) or poisonous (p). There are about 22 categorical features for each sample in the dataset. Some samples have a character "?" which indicates the dataset has some missing value. Also, all categorical values are replaced with numerical values. The size of the dataset is 8124 $\times$ 16.
 
-
-\subsection{Discretization}
-Since some of algorithms accept only discreated values, I have used the equal width binning algorithm to discretize the continuous data to categorical version. This method to partition the range of features into k equal-width distances. The interval width (w) is calculated by the below equation.
-
-$$
-w = \frac{[ max(feature)-min(feature)] }{k}
-$$
-
-Then, the $i^{th}$ interval range can be found by using this equation.
-
-$$
-[min(feature) + (i-1)w,~~ min(feature) + iw] \mbox{~~where~~}  i = 1, 2, 3, \dots, k
-$$
-
-Now, we can scan each features values and if it is in the $i^{th}$ interval range, we replace it with $i$ value. As a result, the new feature set has only $i$ different value.
-
-Breast cancer, Ecoli and letter dataset have the continuous attributes, and I have discretized them for using ID3, Random Forests, and Adaboost classifier. 
-
-\begin{table}[H]
-\centering
-\caption{The equal width binning function for discretizing the continious data to categorical version.}
-\begin{lstlisting}
-def discr(x, k):
-    w = (np.max(x) - np.min(x)) / k
-    bins = [np.min(x) + (i) * w for i in range(k)]
-    return np.digitize(x, bins=bins, right=False)
-\end{lstlisting}
-\end{table}
-
-
-
-
-
-\subsection{Categorical to numerical values}
-Car and Mushroom dataset are two data set that have categorical values. To converting these two datasets to a contentious data, I have replaced the categorical values with a numerical values. 
 

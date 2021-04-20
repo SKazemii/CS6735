@@ -11,7 +11,7 @@ In this section, we reviewed the result of implemented algorithms on datasets.
 
 
 \subsection{K-nearest neighbors algorithm (KNN)}
-This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. Furthermore, this algorithm take the numerical values. Since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by replace method. 
+This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. Furthermore, this algorithm takes the numerical values and since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by the replace method in Pandas library. 
 
 \begin{table}[H]
 \centering
@@ -62,7 +62,7 @@ This algorithm is very simple and easy to implement. It has only one hyper-param
 
  
 
-It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyperparameters. Furthermore, this algorithm take the numerical values. Since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by replace method.       
+It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyperparameters. Furthermore, this algorithm takes the numerical values and since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by the replace method in Pandas library.    
 
 
 
@@ -112,7 +112,7 @@ It is a fast algorithm. In this algorithm, we must assume that the features are 
 
 
 \subsection{Iterative Dichotomiser 3 algorithm (ID3)}
-The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand. Also it could not support continuous values. Therefore, all datasets were discretized before using this algorithm. 
+The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand. Also it could not support continuous values. Therefore, all datasets were discretized before using this algorithm (see session \ref{ses:Discretization} for more detail). 
 
 
 \begin{table}[H]
@@ -174,7 +174,7 @@ The speed of building decision tree is relatively fast, the algorithm is simple,
 
 
 \subsection{Random Forest algorithm}
-Random Forest is less impacted by noise, because we train several decision trees. For this project, the number of trees was set to 5. Due to the fact that this algorithm is derived from ID3, we need to discretize data. 
+Random Forest is less impacted by noise, because we train several decision trees. For this project, the number of trees was set to 5. Due to the fact that this algorithm is using ID3, we need to discretize data. 
 
 \begin{table}[H]
 \centering
@@ -220,7 +220,7 @@ Random Forest is less impacted by noise, because we train several decision trees
 
 
 \subsection{Adaboost algorithm}
-Adaboost is easy to implement. Also, it could not overtrain since each node is divided into two branches. It can be implemented with other classifications. I have implemented it with a binary stump classifier. As a result, I could classify only cancer and mushroom datasets because these are only two classes. For this project, the number of weak classifiers considered 5.
+Adaboost is easy to implement. Also, it could not overtrain since each node is divided into two branches. It can be implemented with other classifications. I have implemented it with a binary stump classifier. As a result, I could classify only cancer and mushroom datasets because these are only two classes. For this project, the number of weak classifiers considered 5. Also this algorithm could only support symbolizing values. Therefore, all datasets were discretized before using this algorithm (see session \ref{ses:Discretization} for more detail). 
 
 
 

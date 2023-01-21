@@ -1,0 +1,241 @@
+\vspace{2cm}
+\section{ Results and Discussion}
+\vspace{2cm}
+
+In this section, we reviewed the result of implemented algorithms on datasets.
+
+
+
+%Report and analysis of your experimental results. Compare and discuss your algorithms (implementations) based on your experimental results..
+
+
+
+\subsection{K-nearest neighbors algorithm (KNN)}
+This algorithm is very simple and easy to implement. It has only one hyper-parameter (k\_neighbor), and we considered it as 3 for all datasets. The algorithm got significantly slower for the letter and mushroom dataset because the volume of data increased. Furthermore, this algorithm takes the numerical values and since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by the replace method in Pandas library. 
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of KNN on cancer dataset.}
+\label{tab:tab_knn_canc}
+\input{manuscript/src/tables/programing_project/Accuracy KNN on cancer dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of KNN on cars dataset.}
+\label{tab:tab_knn_cars}
+\input{manuscript/src/tables/programing_project/Accuracy KNN on cars dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of KNN on ecol dataset.}
+\label{tab:tab_knn_ecol}
+\input{manuscript/src/tables/programing_project/Accuracy KNN on ecol dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of KNN on letter dataset.}
+\label{tab:tab_knn_letter}
+\input{manuscript/src/tables/programing_project/Accuracy KNN on letter dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of KNN on mushroom dataset.}
+\label{tab:tab_knn_mushroom}
+\input{manuscript/src/tables/programing_project/Accuracy KNN on mushroom dataset}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Naive Bayes algorithm}
+
+ 
+
+It is a fast algorithm. In this algorithm, we must assume that the features are independent with a Gaussian distribution. As you can see, the algorithm had a great result on cancer and mushroom dataset, while for other datasets, the results were not good. The reason could be neither features are independent nor their distribution is Gaussian. This algorithm does not have any hyperparameters. Furthermore, this algorithm takes the numerical values and since Car and Mushroom dataset have the categorical attributes, I have converted them to numerical version by the replace method in Pandas library.    
+
+
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Naive Bayes on cancer dataset.}
+\label{tab:tab_NB_canc}
+\input{manuscript/src/tables/programing_project/Accuracy Naive Bayes on cancer dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Naive Bayes on cars dataset.}
+\label{tab:tab_NB_cars}
+\input{manuscript/src/tables/programing_project/Accuracy Naive Bayes on cars dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Naive Bayes on ecol dataset.}
+\label{tab:tab_NB_ecol}
+\input{manuscript/src/tables/programing_project/Accuracy Naive Bayes on ecol dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Naive Bayes on letter dataset.}
+\label{tab:tab_NB_letter}
+\input{manuscript/src/tables/programing_project/Accuracy Naive Bayes on letter dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Naive Bayes on mushroom dataset.}
+\label{tab:tab_NB_mushroom}
+\input{manuscript/src/tables/programing_project/Accuracy Naive Bayes on mushroom dataset}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Iterative Dichotomiser 3 algorithm (ID3)}
+The speed of building decision tree is relatively fast, the algorithm is simple, and the generated rules are easy to understand. Also it could not support continuous values. Therefore, all datasets were discretized before using this algorithm (see session \ref{ses:Discretization} for more detail). 
+
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of ID3 on mushroom dataset.}
+\label{tab:tab_id3_mushroom}
+\input{manuscript/src/tables/programing_project/Accuracy ID3 on mushroom dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of ID3 on cancer dataset.}
+\label{tab:tab_id3_cancer}
+\input{manuscript/src/tables/programing_project/Accuracy ID3 on cancer dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of ID3 on cars dataset.}
+\label{tab:tab_id3_cars}
+\input{manuscript/src/tables/programing_project/Accuracy ID3 on cars dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of ID3 on ecol dataset.}
+\label{tab:tab_id3_ecol}
+\input{manuscript/src/tables/programing_project/Accuracy ID3 on ecol dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of ID3 on letter dataset.}
+\label{tab:tab_id3_letter}
+\input{manuscript/src/tables/programing_project/Accuracy ID3 on letter dataset}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Random Forest algorithm}
+Random Forest is less impacted by noise, because we train several decision trees. For this project, the number of trees was set to 5. Due to the fact that this algorithm is using ID3, we need to discretize data. 
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Random Forest on cancer dataset.}
+\label{tab:tab_rf_cancer}
+\input{manuscript/src/tables/programing_project/Accuracy Random Forest on cancer dataset}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Random Forest on cars dataset.}
+\label{tab:tab_rf_cars}
+\input{manuscript/src/tables/programing_project/Accuracy Random Forest on cars dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Random Forest on ecol dataset.}
+\label{tab:tab_rf_ecol}
+\input{manuscript/src/tables/programing_project/Accuracy Random Forest on ecol dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Random Forest on letter dataset.}
+\label{tab:tab_rf_letter}
+\input{manuscript/src/tables/programing_project/Accuracy Random Forest on letter dataset}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Random Forest on mushroom dataset.}
+\label{tab:tab_rf_mushroom}
+\input{manuscript/src/tables/programing_project/Accuracy Random Forest on mushroom dataset}
+\end{table}
+
+
+
+
+
+
+
+\subsection{Adaboost algorithm}
+Adaboost is easy to implement. Also, it could not overtrain since each node is divided into two branches. It can be implemented with other classifications. I have implemented it with a binary stump classifier. As a result, I could classify only cancer and mushroom datasets because these are only two classes. For this project, the number of weak classifiers considered 5. Also this algorithm could only support symbolizing values. Therefore, all datasets were discretized before using this algorithm (see session \ref{ses:Discretization} for more detail). 
+
+
+
+
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Adaboost on cancer dataset.}
+\label{tab:tab_Adaboost_cancer}
+\input{manuscript/src/tables/programing_project/Accuracy Adaboost on cancer dataset}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{The accuracy of Adaboost on mushroom dataset.}
+\label{tab:tab_Adaboost_mushroom}
+\input{manuscript/src/tables/programing_project/Accuracy Adaboost on mushroom dataset}
+\end{table}

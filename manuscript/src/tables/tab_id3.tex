@@ -1,0 +1,38 @@
+{\small
+\begin{tabular}{llll}
+\toprule
+\multicolumn{4}{|c|}{Class Name: ID3} \\
+\midrule
+\multicolumn{2}{|c|}{parent: classifiers} &\multicolumn{2}{|c|}{Child: RF} \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Attributes} \\\midrule
+\multicolumn{1}{|r}{n\_folds: } & \multicolumn{3}{l|}{the number of folds } \\
+\multicolumn{1}{|r}{dataset: } & \multicolumn{3}{l|}{the train dataset (the last column is the target) } \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Methods} \\\midrule
+\multicolumn{2}{|r}{\_\_init\_\_(dataset, n\_folds, attr\_names) } & \multicolumn{2}{l|}{constructor to initialise the attributes of the class} \\
+\multicolumn{2}{|r}{id3(trainset, testset) } & \multicolumn{2}{l|}{Build the ID3 algorithm} \\
+\multicolumn{2}{|r}{decision\_tree(trainset, attr\_names) } & \multicolumn{2}{l|}{Build the decision tree} \\
+\multicolumn{2}{|r}{split(trainset, arc, val) } & \multicolumn{2}{l|}{Split the dataset based on an attribute} \\
+\multicolumn{2}{|r}{attr\_selection(trainset, attr\_names) } & \multicolumn{2}{l|}{Find the best attribute for the split } \\
+\multicolumn{2}{|r}{entropy(data) } & \multicolumn{2}{l|}{Compute the entropy} \\
+\multicolumn{2}{|r}{test(test\_set, tree, attr\_names)} & \multicolumn{2}{l|}{Calculate the prediction accuracy} \\
+\multicolumn{2}{|r}{predict(models, test\_row) } & \multicolumn{2}{l|}{Predict an unseen instance} \\ \midrule
+
+
+\multicolumn{1}{|c|}{Parameters}
+& \multicolumn{1}{|r}{dataset:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{n\_folds:}& \multicolumn{2}{l|}{int, default=5}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{names:}& \multicolumn{2}{l|}{a list of feature names}\\\midrule
+
+\multicolumn{1}{|c|}{Returns} & \multicolumn{1}{|r}{pred:}& \multicolumn{2}{l|}{predicted classes}\\
+
+
+
+
+\bottomrule
+\end{tabular}}

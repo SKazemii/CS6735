@@ -1,0 +1,35 @@
+{\small
+\begin{tabular}{llll}
+\toprule
+\multicolumn{4}{|c|}{Class Name: AB} \\
+\midrule
+\multicolumn{2}{|c|}{parent: classifiers} &\multicolumn{2}{|c|}{Child: -} \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Attributes} \\\midrule
+\multicolumn{1}{|r}{n\_folds: } & \multicolumn{3}{l|}{the number of folds } \\
+\multicolumn{1}{|r}{n\_clfs: } & \multicolumn{3}{l|}{the number of weak classifiers } \\
+\multicolumn{1}{|r}{dataset: } & \multicolumn{3}{l|}{the train dataset (the last column is the target) } \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Methods} \\\midrule
+\multicolumn{2}{|r}{\_\_init\_\_(data, n\_folds, n\_clfs) } & \multicolumn{2}{l|}{constructor to initialise the attributes of the class} \\
+\multicolumn{2}{|r}{pred = AB(trainset, testset) } & \multicolumn{2}{l|}{Build the Adaboost algorithm} \\
+\multicolumn{2}{|r}{ABoost(X, y) } & \multicolumn{2}{l|}{Find the weak lassifiers } \\
+\multicolumn{2}{|r}{predict(data) } & \multicolumn{2}{l|}{Predict the classes} \\ \midrule
+
+
+\multicolumn{1}{|c|}{Parameters}
+& \multicolumn{1}{|r}{dataset:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{n\_folds:}& \multicolumn{2}{l|}{int, default=5}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{n\_clfs:}& \multicolumn{2}{l|}{int, default=5}\\\midrule
+
+\multicolumn{1}{|c|}{Returns} & \multicolumn{1}{|r}{pred:}& \multicolumn{2}{l|}{predicted classes}\\
+
+
+
+
+\bottomrule
+\end{tabular}}

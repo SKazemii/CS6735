@@ -1,0 +1,34 @@
+{\small
+\begin{tabular}{llll}
+\toprule
+\multicolumn{4}{|c|}{Class Name: classifiers} \\
+\midrule
+\multicolumn{2}{|c|}{parent: -} &\multicolumn{2}{|c|}{Child: KNN, NB, KNN, RF} \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Attributes} \\\midrule
+\multicolumn{1}{|r}{n\_folds: } & \multicolumn{3}{l|}{the number of folds } \\\bottomrule
+
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Methods} \\\midrule
+\multicolumn{2}{|r}{kfold\_split(dataset, n\_folds) } & \multicolumn{2}{l|}{split the dataset to n\_folds} \\
+\multicolumn{2}{|r}{accuracy(y\_true, y\_pred) } & \multicolumn{2}{l|}{compute the accuracy} \\
+\multicolumn{2}{|r}{accuracy = fit() } & \multicolumn{2}{l|}{train the algorithm} \\\midrule
+
+
+\multicolumn{1}{|c|}{Parameters}
+& \multicolumn{1}{|r}{dataset:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{n\_folds}& \multicolumn{2}{l|}{int, default=5}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{y\_true}& \multicolumn{2}{l|}{list-like of shape (n\_samples,)}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{y\_pred}& \multicolumn{2}{l|}{list-like of shape (n\_samples,)}\\\midrule
+
+\multicolumn{1}{|c|}{Returns} & \multicolumn{1}{|r}{accuracy}& \multicolumn{2}{l|}{accuracy score of each k\_fold in percentage}\\
+
+
+
+
+\bottomrule
+\end{tabular}}

@@ -1,0 +1,36 @@
+{\small
+\begin{tabular}{llll}
+\toprule
+\multicolumn{4}{|c|}{Class Name: KNN} \\
+\midrule
+\multicolumn{2}{|c|}{parent: classifiers} &\multicolumn{2}{|c|}{Child: -} \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Attributes} \\\midrule
+\multicolumn{1}{|r}{n\_folds: } & \multicolumn{3}{l|}{the number of folds } \\
+\multicolumn{1}{|r}{dataset: } & \multicolumn{3}{l|}{the train dataset (the last column is the target) } \\
+\multicolumn{1}{|r}{k\_neighbor: } & \multicolumn{3}{l|}{the number of folds } \\\bottomrule
+
+
+\multicolumn{4}{c}{} \\\bottomrule
+\multicolumn{4}{|c|}{Methods} \\\midrule
+\multicolumn{2}{|r}{\_\_init\_\_(dataset, n\_folds, k\_neighbor) } & \multicolumn{2}{l|}{constructor to initialise the attributes of the class} \\
+\multicolumn{2}{|r}{pred = knn(tr\_set, te\_set) } & \multicolumn{2}{l|}{compute the distants} \\
+\multicolumn{2}{|r}{find\_response(k\_neighbor, classes) } & \multicolumn{2}{l|}{find the nearest neighbors} \\\midrule
+
+
+\multicolumn{1}{|c|}{Parameters}
+& \multicolumn{1}{|r}{dataset:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{n\_folds:}& \multicolumn{2}{l|}{int, default=5}\\
+\multicolumn{1}{|l|}{} & \multicolumn{1}{|r}{k\_neighbor:}& \multicolumn{2}{l|}{an odd integer, default=3}\\
+\multicolumn{1}{|l|}{}& \multicolumn{1}{|r}{tr\_set:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\
+\multicolumn{1}{|l|}{}& \multicolumn{1}{|r}{te\_set:}& \multicolumn{2}{l|}{array-like of shape (n\_samples, n\_features+target)}\\\midrule
+
+\multicolumn{1}{|c|}{Returns} & \multicolumn{1}{|r}{pred:}& \multicolumn{2}{l|}{predicted classes}\\
+
+
+
+
+\bottomrule
+\end{tabular}}

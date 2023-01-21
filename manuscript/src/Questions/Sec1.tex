@@ -1,0 +1,115 @@
+\vspace{2cm}
+\section{ Datasets and pre-processing}
+\vspace{2cm}
+In this section, we will review the datasets as well as the pre-processing techniques. Dataset can be downloaded from the Desire2Learning website. 
+Before describing the dataset, let look at the discretization algorithm.
+
+
+
+%Description of the datasets you use (number of examples, number of attribute, number of classes, type of attributes, etc.).
+%Technical details of your implementation: pre-processing of data sets (discretization, etc.), parameter setting, etc.
+\subsection{Discretization algorithm}
+\label{ses:Discretization}
+Since some of algorithms accept only discreated values, I have used the equal width binning algorithm to discretize the continuous data to categorical version. This method to partition the range of features into k equal-width distances. The interval width (w) is calculated by the below equation.
+
+$$
+w = \frac{[ max(feature)-min(feature)] }{k}
+$$
+
+Then, the $i^{th}$ interval range can be found by using this equation.
+
+$$
+[min(feature) + (i-1)w,~~ min(feature) + iw] \mbox{~~where~~}  i = 1, 2, 3, \dots, k
+$$
+
+Now, we can scan each features values and if it is in the $i^{th}$ interval range, we replace it with $i$ value. As a result, the new feature set has only $i$ different value.
+
+Breast cancer, Ecoli and letter dataset have the continuous attributes, and I have discretized them for using ID3, Random Forests, and Adaboost classifier. 
+
+\begin{table}[H]
+\centering
+\caption{The equal width binning function for discretizing the continious data to categorical version.}
+\begin{lstlisting}
+def discr(x, k=5):
+    w = (np.max(x) - np.min(x)) / k
+    bins = [np.min(x) + (i) * w for i in range(k)]
+    return np.digitize(x, bins=bins, right=False)
+\end{lstlisting}
+\end{table}
+
+
+
+
+
+\subsection{Categorical to numerical values}
+Car and Mushroom dataset are two data set that have categorical values. To converting these two datasets to a contentious data, I have replaced the categorical values with a numerical values. 
+
+
+
+
+\subsection{Breast Cancer Wisconsin (Diagnostic) Dataset}
+
+This dataset was included real data about breast cancer. In the CSV file, there are 11 columns. The first column, which is a seven-digit number, indicates the patient ID. Also, the last column is our target. Other columns were real-valued features that are computed from each cell nucleus. 
+
+For reading this dataset, we used a Pandas DataFrame. Since some values in the dataset were a question mark, we replaced those with a NaN value. After that, we drop all rows that had NaN values. The final size of the dataset is 682 rows $\times$ 10 columns. Based on the Question, this dataset has two class values, 2 and 4.
+
+
+
+
+
+
+
+
+%Description of the datasets you use (number of examples, number of attribute, number of classes, type of attributes, etc.).
+%Technical details of your implementation: pre-processing of data sets (discretization, etc.), parameter setting, etc.
+
+\subsection{Car Evaluation Dataset}
+
+Car Evaluation Database was derived from a simple hierarchical decision model. This dataset has four class values named unacc, acc, good, vgood, and it is located in the final column. Other features are buying, maint, doors, persons, safety and lug\_boot. These features have categorical values. The table below shows the attribute information.  
+
+
+\begin{table}[H]
+\centering
+\caption{The attribute information of Car Evaluation dataset.}
+\label{tab:tab_1}
+\input{tables/tab_1.tex}
+\end{table}
+
+In addition, there is no missing value in the dataset. Therefore, the final size of this dataset is 6 $\times$ 1728. Furthermore, in order to use some algorithms like kNN, we changed the categorical values to numerical values by means of the replace method in Pandas DataFrame. 
+
+
+
+
+\subsection{Ecoli Dataset}
+This data contains protein localization sites. The size of the dataset is 336 $\times$ 8, and there is no missing value. Table \ref{tab:tab_2} indicates the attribute information of this dataset. Furthermore, All features have a real value.
+
+\begin{table}[H]
+\centering
+\caption{The attribute information of Ecoli dataset.}
+\label{tab:tab_2}
+\input{tables/tab_2.tex}
+\end{table}
+
+The last column shows the classes of this dataset which takes eight different values.
+
+
+
+
+\subsection{Letter Recognition Dataset}
+
+The objective of this dataset is to classify each of the 26 capital letters in the English alphabet. The character images were based on 20 different fonts, and each letter within these 20 fonts was randomly distorted to produce a file of 20,000 unique samples. Each sample was converted into 16 numerical attributes. These values are an integer number between 0 and 15. 
+
+\begin{table}[H]
+\centering
+\caption{The attribute information of letter recognition dataset.}
+\label{tab:tab_3}
+\input{tables/tab_3.tex}
+\end{table}
+
+The size of the dataset is 20000 $\times$ 16. The first column also shows the class of sample that is a capital letter. This dataset has no missing values. In addition, all classes are replaced with a numerical value as a preprocessing step.
+
+\subsection{Mushroom Dataset}
+
+This data set includes descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family. Each species is identified as definitely edible (e) or poisonous (p). There are about 22 categorical features for each sample in the dataset. Some samples have a character "?" which indicates the dataset has some missing value. Also, all categorical values are replaced with numerical values. The size of the dataset is 8124 $\times$ 16.
+
+

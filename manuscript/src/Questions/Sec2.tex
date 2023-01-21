@@ -1,0 +1,254 @@
+\vspace{2cm}
+\section{ Implemented algorithms}
+\vspace{2cm}
+
+In this section, we will review the algorithms as well as implemented techniques. Furthermore, to implementing k-fold cross-validation, we implemented a classifier class which the Parent’s class of other algorithms is.
+In the classifier class, we have three methods, kfold\_split(), accuracy(), and fit(). Table \ref{tab:tab_classifier} indicates the methods and attributes of this class. 
+
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of classifier class.}
+\label{tab:tab_classifier}
+\input{manuscript/src/tables/tab_classifier}
+\end{table}
+
+I have implemented the k\_fold algorithm as follows:
+\begin{enumerate}
+    \item Find the length of each fold by dividing the dataset length into k\_fold.
+    \item Select an index randomly, and then copy the selected index to the new set by means of the pop method in Pandas.
+    \item Check the length of the new set. If it is less than part (1), repeat part (2), otherwise make another set.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{K-nearest neighbors algorithm (KNN)}
+
+For using this algorithm, we need to make an instance of the KNN class. This instance calls the \_\_init\_\_ method to set some attributes for the algorithm. After that, with the fit method, we train the algorithm. The table below shows a piece of code used for making an instance of the KNN class. Moreover, table \ref{tab:tab_knn} illustrates the methods and attributes of this class. Furthermore, the k parameter must be an odd number. 
+
+
+\begin{table}[H]
+\centering
+\caption{Making an instance of KNN class.}
+\begin{lstlisting}
+for _ in range(10):
+    knn = KNN(n_folds=5, dataset=dataset, k_neighbor=3)
+    accuracy = knn.fit()
+    acc.append(sum(accuracy) / len(accuracy))
+\end{lstlisting}
+\end{table}
+
+
+
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of KNN class.}
+\label{tab:tab_knn}
+\input{manuscript/src/tables/tab_knn}
+\end{table}
+
+I have implemented the kNN algorithm as follows:
+
+\begin{enumerate}
+    \item For each sample in the test data, calculate the distances between the current sample and all samples in the training set (with knn() method)
+    \item Sort the distances list in ascending order and find the class of the top k\_neighbor (with find\_response() method).
+    \item Pick and return the first and most repeated label from the previous collection as a label of test example (with find\_response() method).
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Naive Bayes algorithm}
+
+For implementing this algorithm, we wrote the NB class. Also, we consider normal distribution for implementation. Table \ref{tab:tab_nb} illustrates the methods and attributes of this class.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of NB class.}
+\label{tab:tab_nb}
+\input{manuscript/src/tables/tab_nb}
+\end{table}
+
+The table below shows a piece of code used for making an instance of the NB class.
+
+\begin{table}[H]
+\centering
+\caption{Making an instance of NB class.}
+\begin{lstlisting}
+for _ in range(10):
+    nb = NB(n_folds=5, dataset=dataset)
+    accuracy = nb.fit()
+    acc.append(sum(accuracy) / len(accuracy))
+\end{lstlisting}
+\end{table}
+
+
+I have implemented the Naive Bayes algorithm as follows:
+\begin{enumerate}
+    \item Split training set by class value (model\_classes())
+    \item Find the mean and std of each attribute in each split dataset by their class (model\_classes()).
+    \item Calculate the class probability for each test sample (find\_pdf()). Combine probability of each feature (predict()).
+    \item Compare probability for each class. Return the class label which has max probability (predict()).
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Iterative Dichotomiser 3 algorithm (ID3)}
+We wrote the ID3 class to implement this algorithm.  Table \ref{tab:tab_id3} illustrates the methods and attributes of this class. This algorithm calls yourself like a recursive function. Moreover, the dataset must be a categorical data. Therefore, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of ID3 class.}
+\label{tab:tab_id3}
+\input{manuscript/src/tables/tab_id3}
+\end{table}
+To use this algorithm, you need to make an instance first. The table below shows a piece of code used for doing it.
+
+\begin{table}[H]
+\centering
+\caption{Making an instance of ID3 class.}
+\begin{lstlisting}
+for _ in range(10):
+    id3 = ID3(n_folds=5, dataset=dataset, names=names)
+    accuracy = id3.fit()
+    acc.append(sum(accuracy) / len(accuracy))
+\end{lstlisting}
+\end{table}
+
+
+I have implemented the ID3 algorithm as follows:
+\begin{enumerate}
+    \item Create a node. If all samples belong to the same class, the node is marked as a leaf node and returns the class.
+
+    \item For each feature in the data set, calculate the Information Gain. Then split feature that has the maximum information gain.
+        
+    \item For each value in the split attribute, extend the corresponding branch, and divide samples according to the feature value.
+    
+    \item Use the same procedure, recursion from the top down until one of the following three conditions is met and the recursion stops. If there are still samples belonging to different categories in the leaf node, the category containing the most samples is selected as the classification of the leaf node.
+
+
+    \begin{itemize}
+        \item All samples belong to the same class.
+        \item All samples in the training set were classified.
+        \item All features were executed once as split features.
+    \end{itemize}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Random Forests algorithm}
+We used the ID3 class to implement the random forests algorithm. Table \ref{tab:tab_rf} illustrates the methods and attributes of this class.  To converting continuous values to discreated version, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of Random Forests class.}
+\label{tab:tab_rf}
+\input{manuscript/src/tables/tab_rf}
+\end{table}
+
+I have implemented the Random Forests algorithm as follows:
+\begin{enumerate}
+    \item For Each tree do:
+    \begin{enumerate}
+        \item Create a bagging dataset.
+        \item Train a ID3 algorithm based on the new dataset.
+        \item Test the tree with the test set.
+    \end{enumerate}
+    \item Vote between the results of algorithms to find the final result.
+    
+\end{enumerate}
+
+The table below shows a piece of code that is used for making an instance. 
+
+\begin{table}[H]
+\centering
+\caption{Making an instance of Random Forests class.}
+\begin{lstlisting}
+for _ in range(10):
+    rf = RF(n_folds=5, dataset=dataset, names=names)
+    accuracy = rf.fit()
+    acc.append(sum(accuracy) / len(accuracy))
+\end{lstlisting}
+\end{table}
+
+
+
+
+
+
+\subsection{Adaboost algorithm}
+We used the binary classification (stump) to implement the Adaboost algorithm. Table \ref{tab:tab_ab} illustrates the methods and attributes of this class. Moreover, the implemented algorithm could do binary classification. Also, the dataset must be a categorical data. So, I have used 5-bin discretization for all attributes in Ecoli, Breast Cancer, and Letter datasets.
+
+\begin{table}[H]
+\centering
+\caption{The methods and attributes of Adaboost class.}
+\label{tab:tab_ab}
+\input{manuscript/src/tables/tab_ab}
+\end{table}
+We used this Adaboost algorithm flow for this project:
+\begin{enumerate}
+    \item Initially set uniform example weights.
+    \item For Each weak classifier do:
+    \begin{enumerate}
+        \item Greedy search to find best threshold and feature.
+        \item Find the lowest error as sum of weights of misclassified samples 
+        \item Store the best configuration that has lowest error as a first weak classifier
+        \item Calculate predictions and update weights
+        \item Normalize to weights
+    \end{enumerate}
+
+\end{enumerate}
+
+The table below shows a piece of code that is used for making an instance. 
+
+\begin{table}[H]
+\centering
+\caption{Making an instance of Adaboost class.}
+\begin{lstlisting}
+for _ in range(10):
+    adaboost = AB(n_folds=5, dataset=dataset, n_clf=5)
+    accuracy = adaboost.fit()
+    acc.append(sum(accuracy) / len(accuracy))
+\end{lstlisting}
+\end{table}
